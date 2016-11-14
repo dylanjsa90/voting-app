@@ -5,26 +5,30 @@ function setState(state, newState) {
 }
 
 function vote(state, entry) {
+  const currentRound = state.getIn(['vote', 'round']);
   const currentPair = state.getIn(['vote', 'pair']);
   if (currentPair && currentPair.includes(entry)) {
-    return state.set('hasVoted', entry);
-  } else {
-    return state;
-  }
+    return state.set('myVote', Map({
+      round: currentRound,
+      entry
+    }));
+  } 
+  return state;
 }
 
 function resetVote(state) {
-  const hasVoted = state.get('hasVoted');
-  const currentPair = state.getIn(['vote', 'pair'], List());
-  if (hasVoted && !currentPair.includes(hasVoted)) {
-    return state.remove('hasVoted');
-  } else {
-    return state;
+  const votedForRound = state.getIn(['myVote', 'round']);
+  const currentRound = state.getIn(['vote', 'round']);
+  if (votedForRound !== currentRound) {
+    return state.remove('myVote');
   }
+  return state;
 }
 
 export default function(state = Map(), action) {
   switch (action.type) {
+    case 'SET_CLIENT_ID':
+      return state.set('clientId', action.clientId);
     case 'SET_STATE':
       return resetVote(setState(state, action.state));
     case 'VOTE':
