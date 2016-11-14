@@ -1,7 +1,7 @@
 import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
-import reducer from '../src/render';
+import reducer from '../src/reducer';
 
 describe('reducer', () => {
   it('removes hasVoted after vote completion', () => {
@@ -72,7 +72,8 @@ describe('reducer', () => {
       type: 'SET_STATE',
       state: {
         vote: {
-          pair: ['Trainspotting', '28 days later']
+          pair: ['Trainspotting', '28 days later'],
+          tally: {Trainspotting: 1}
         }
       }
     };

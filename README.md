@@ -1,0 +1,1 @@
+This is the client application for the React + Redux group voting app 
