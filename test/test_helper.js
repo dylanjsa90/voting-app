@@ -1,4 +1,4 @@
-import jsdom from 'jsdom';
+let jsdom = require('jsdom');
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 
