@@ -4,6 +4,13 @@ function setState(state, newState) {
   return state.merge(newState);
 }
 
+function setConnectionState(state, connectionState, connected) {
+  return state.set('connection', Map({
+    state: connectionState,
+    connected
+  }));
+}
+
 function vote(state, entry) {
   const currentRound = state.getIn(['vote', 'round']);
   const currentPair = state.getIn(['vote', 'pair']);
@@ -31,6 +38,8 @@ export default function(state = Map(), action) {
       return state.set('clientId', action.clientId);
     case 'SET_STATE':
       return resetVote(setState(state, action.state));
+    case 'SET_CONNECTION_STATE':
+      return setConnectionState(state, action.state, action.connected);
     case 'VOTE':
       return vote(state, action.entry);
   }
